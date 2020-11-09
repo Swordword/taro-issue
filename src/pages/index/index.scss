@@ -1,0 +1,10 @@
+.index-page {
+  .canvas-container {
+    position: relative;
+    .content {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+  }
+}

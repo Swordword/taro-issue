@@ -1,6 +1,7 @@
 export default {
   pages: [
     'pages/index/index',
+    'pages/copy/index',
     'pages/test/index',
 
   ],

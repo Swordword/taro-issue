@@ -6,7 +6,7 @@ import "./index.scss";
 
 const Index: React.FC = () => {
   useReady(()=>{
-    console.log('page useReady');
+    console.log('copy page useReady');
   })
   return (
     <View className='index-page'>

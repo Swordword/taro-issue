@@ -65,13 +65,13 @@ const Index: React.FC = () => {
   return (
     <Canvas
       type='2d'
-      style={{ width: "100%", height: "100%" }}
+      style={{ width: "100%", height: "50%" }}
       onTouchStart={handleTouchStart}
       canvasId='myCanvas'
       id='myCanvas'
       disableScroll
     >
-      <CoverView onClick={() => setShow(true)}>show</CoverView>
+      
       {show ? <CoverModel exit={() => setShow(false)} /> : null}
     </Canvas>
   );

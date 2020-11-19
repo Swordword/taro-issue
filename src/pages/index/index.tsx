@@ -5,8 +5,8 @@ import PlaceCanvas from "../../components/PlaceCanvas";
 import "./index.scss";
 
 const Index: React.FC = () => {
-  useReady(() => {
-    console.log("page useReady");
+  useDidShow(() => {
+    console.log("page useDidShow");
   });
   const navigate = () => {
     Taro.navigateTo({

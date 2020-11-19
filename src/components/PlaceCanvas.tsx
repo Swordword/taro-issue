@@ -18,19 +18,37 @@ const Index: React.FC = () => {
   const [ctx, setCtx] = useState<CanvasRenderingContext2D>();
   const [show, setShow] = useState(false);
   const ctxRef = useRef<CanvasRenderingContext2D>();
-  useReady(() => {
-    console.log("comp useReady");
+  useDidShow(() => {
+    console.log("comp useDidShow");
     eventCenter.once(
-      (getCurrentInstance().router as RouterInfo).onReady, // 类型断言
+      (getCurrentInstance().router as RouterInfo).onShow, // 类型断言
       () => {
-        console.log("useReady received");
+        console.log("useDidShow received");
         loadCanvas();
       }
     );
   });
 
   const loadCanvas = () => {
-    Taro.createSelectorQuery().select("#myCanvas").node(init.bind(this)).exec();
+    console.log("fn loadCanvas");
+    function getCanvas() {
+      console.log("fn getCanvas");
+      return new Promise((resolve, reject) => {
+        Taro.createSelectorQuery()
+          .select("#myCanvas")
+          .node((res) => {
+            if (res && res.node) {
+              resolve(res);
+            } else {
+              setTimeout(() => {
+                getCanvas();
+              }, 100);
+            }
+          })
+          .exec();
+      });
+    }
+    getCanvas().then(init.bind(this));
   };
   /**
    *
@@ -44,14 +62,20 @@ const Index: React.FC = () => {
     const tempctx = canvas.getContext("2d");
     tempctx.fillStyle = "red";
     setCtx(tempctx);
+    draw();
   };
-  useEffect(() => {
+  const draw = () => {
     ctxRef.current = ctx;
     console.log("ctxRef.current", ctxRef.current);
+    ctxRef.current?.clearRect(0, 0, ctxRef.current.canvas.width, ctxRef.current.canvas.width);
     // ctxRef.current
     if (ctxRef.current) {
       ctxRef.current.fillRect(pagePosition.x, pagePosition.y, 100, 100);
     }
+  };
+  useEffect(() => {
+    draw();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ctx, pagePosition]);
   const render = () => {};
   const handleTouchStart = (e) => {
@@ -71,7 +95,6 @@ const Index: React.FC = () => {
       id='myCanvas'
       disableScroll
     >
-      
       {show ? <CoverModel exit={() => setShow(false)} /> : null}
     </Canvas>
   );

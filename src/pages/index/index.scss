@@ -1,5 +1,22 @@
-.index-page {
-  position: relative;
-  widows: 100px;
+.canvas-image-comp {
+  position: fixed;
+  width: 100vw;
   height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  .canvas-image {
+    margin: 180px auto;
+    width: 530px;
+    height: 750px;
+  }
+  .generate-button {
+    position: fixed;
+    width: 100vw;
+    height: 112px;
+    bottom: 0;
+    text-align: center;
+    line-height: 112px;
+    background-color: #fff;
+  }
 }

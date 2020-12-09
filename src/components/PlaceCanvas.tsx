@@ -16,6 +16,7 @@ const Index: React.FC = () => {
     y: 0,
   });
   const [ctx, setCtx] = useState<CanvasRenderingContext2D>();
+  const [canvasShow, setCanvasShow] = useState(false);
   const [show, setShow] = useState(false);
   const ctxRef = useRef<CanvasRenderingContext2D>();
   useDidShow(() => {
@@ -65,9 +66,15 @@ const Index: React.FC = () => {
     draw();
   };
   const draw = () => {
+    setCanvasShow(true);
     ctxRef.current = ctx;
     console.log("ctxRef.current", ctxRef.current);
-    ctxRef.current?.clearRect(0, 0, ctxRef.current.canvas.width, ctxRef.current.canvas.width);
+    ctxRef.current?.clearRect(
+      0,
+      0,
+      ctxRef.current.canvas.width,
+      ctxRef.current.canvas.width
+    );
     // ctxRef.current
     if (ctxRef.current) {
       ctxRef.current.fillRect(pagePosition.x, pagePosition.y, 100, 100);
@@ -96,6 +103,7 @@ const Index: React.FC = () => {
       disableScroll
     >
       {show ? <CoverModel exit={() => setShow(false)} /> : null}
+      {!canvasShow ? <CoverView>加载中 </CoverView> : null}
     </Canvas>
   );
 };
